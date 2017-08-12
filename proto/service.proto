@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package dns;
+
+import "google/protobuf/empty.proto";
+
+message Host {
+  string hostname = 1;
+
+  string ip = 2;
+}
+
+message HostList {
+  repeated Host hosts = 1;
+}
+
+service DnsService {
+  rpc Add(Host) returns (google.protobuf.Empty) {}
+
+  rpc Remove(Host) returns (google.protobuf.Empty) {}
+
+  rpc Get(google.protobuf.Empty) returns (HostList) {}
+}
