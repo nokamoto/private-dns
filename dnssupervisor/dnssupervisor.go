@@ -126,7 +126,7 @@ func (s *DnsSupervisor)Add(_ context.Context, host *pb.Host) (*google_protobuf.E
 		err = s.sync(hl)
 	}
 
-	return &google_protobuf.Empty{}, nil
+	return &google_protobuf.Empty{}, err
 }
 
 func (s *DnsSupervisor)Remove(_ context.Context, host *pb.Host) (*google_protobuf.Empty, error) {
@@ -145,7 +145,7 @@ func (s *DnsSupervisor)Remove(_ context.Context, host *pb.Host) (*google_protobu
 		err = s.sync(hl)
 	}
 
-	return &google_protobuf.Empty{}, nil
+	return &google_protobuf.Empty{}, err
 }
 
 func (s *DnsSupervisor)Get(context.Context, *google_protobuf.Empty) (*pb.HostList, error) {
