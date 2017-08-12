@@ -9,6 +9,8 @@ protoc:
 
 test: protoc
 	go test ./dnscli
+	go test ./dnssupervisor
 
 install:
 	go install ./dnscli
+	go install ./dnssupervisor
