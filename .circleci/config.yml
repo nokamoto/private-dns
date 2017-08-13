@@ -10,3 +10,13 @@ jobs:
       - run: unzip /tmp/protoc.zip -d $HOME/protoc
       - run: echo 'export PATH=$HOME/protoc/bin:$PATH' >> $BASH_ENV
       - run: make
+
+      - setup_remote_docker:
+          version: 17.06.0-ce
+      - run: |
+          docker login -u $DOCKER_USER -p $DOCKER_PASS
+          ./docker/build.sh
+          docker run -d --name private-dns -p 53:53/tcp -p 53:53/udp -p 9999:9999/tcp --cap-add=NET_ADMIN nokamotohub/private-dns
+      - run: |
+          set -x
+          docker exec -it private-dns /root/go/bin/dnscli get
