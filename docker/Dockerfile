@@ -6,6 +6,8 @@ ENV HOST_FILE /etc/hosts.private
 
 ENV RESOLV_FILE /etc/dnsmasq.resolv.conf
 
+ENV GRPC_PORT 9999
+
 RUN apk --no-cache add dnsmasq
 
 RUN touch $HOST_FILE

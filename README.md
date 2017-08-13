@@ -1,6 +1,7 @@
 # private-dns
 
 [![Build Status](https://travis-ci.org/nokamoto/private-dns.svg?branch=master)](https://travis-ci.org/nokamoto/private-dns)
+[![CircleCI](https://circleci.com/gh/nokamoto/private-dns/tree/master.svg?style=svg)](https://circleci.com/gh/nokamoto/private-dns/tree/master)
 
 ## Install dnscli
 
