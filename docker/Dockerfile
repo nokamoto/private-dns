@@ -22,6 +22,8 @@ RUN apk add --no-cache --virtual .build-deps go git gcc openssl musl-dev
 
 RUN go get github.com/nokamoto/private-dns/dnssupervisor
 
+RUN go get github.com/nokamoto/private-dns/dnscli
+
 RUN apk del .build-deps
 
 COPY run.sh run.sh
