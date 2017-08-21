@@ -10,6 +10,7 @@ func main() {
 	opts := Options{
 		Host: flag.String("h", "localhost", "The server host"),
 		Port: flag.Int("p", 9999, "The server port"),
+		ApiKey: flag.String("apikey", "default", "The request 'x-api-key'"),
 	}
 
 	flag.Parse()
