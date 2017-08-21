@@ -26,4 +26,6 @@ COPY run.sh run.sh
 
 RUN chmod u+x run.sh
 
+ENV PATH $PATH:/root/go/bin
+
 CMD ./run.sh

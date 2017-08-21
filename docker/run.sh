@@ -9,7 +9,7 @@ if [ $status -ne 0 ]; then
 fi
 
 # Start the second process
-/root/go/bin/dnssupervisor -hostsfile $HOST_FILE -port $GRPC_PORT -apikey $API_KEY &
+dnssupervisor -hostsfile $HOST_FILE -port $GRPC_PORT -apikey $API_KEY &
 status=$?
 if [ $status -ne 0 ]; then
   echo "Failed to start dnssupervisor: $status"
