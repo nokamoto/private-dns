@@ -16,4 +16,4 @@ env:
 
 script:
   - make
-  - "[[ -z $(git status -s) ]]" # check if uncommited changes exist
+  - git diff --exit-code

@@ -42,6 +42,8 @@ Usage: dnscli [flags] command [arguments]
 
 $ dnscli --help
 Usage of dnscli:
+  -apikey string
+    	The request 'x-api-key' (default "default")
   -h string
     	The server host (default "localhost")
   -p int
