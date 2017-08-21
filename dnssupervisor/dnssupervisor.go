@@ -14,10 +14,14 @@ import (
 	"strings"
 	"os"
 	"path"
+	"google.golang.org/grpc/metadata"
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
 )
 
 type DnsSupervisor struct {
 	hostsFile string
+	apiKey string
 }
 
 func sortHosts(hosts []*pb.Host) {
@@ -154,6 +158,33 @@ func (s *DnsSupervisor)Get(context.Context, *google_protobuf.Empty) (*pb.HostLis
 	return s.hosts()
 }
 
+func (s *DnsSupervisor)newInterceptor() grpc.UnaryServerInterceptor {
+	f := func(
+		ctx context.Context,
+		req interface{},
+		info *grpc.UnaryServerInfo,
+		handler grpc.UnaryHandler,
+	) (interface{}, error) {
+		md, ok := metadata.FromIncomingContext(ctx)
+		if !ok {
+			return nil, status.Errorf(codes.Unauthenticated, "authentication required")
+		}
+
+		value, ok := md["x-api-key"]
+		if !ok || len(value) != 1 {
+			return nil, status.Errorf(codes.Unauthenticated, "authentication required")
+		}
+
+		if value[0] != s.apiKey {
+			return nil, status.Errorf(codes.Unauthenticated, "authentication failed")
+		}
+
+		return handler(ctx, req)
+	}
+	return grpc.UnaryServerInterceptor(f)
+}
+
+
 func (s *DnsSupervisor)Run(port int) {
 	lis, err := net.Listen("tcp", fmt.Sprintf(":%d", port))
 	if err != nil {
@@ -163,6 +194,8 @@ func (s *DnsSupervisor)Run(port int) {
 	}
 
 	opts := []grpc.ServerOption{}
+
+	opts = append(opts, grpc.UnaryInterceptor(s.newInterceptor()))
 
 	log.Println("register dns service")
 	ns := grpc.NewServer(opts...)

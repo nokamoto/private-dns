@@ -16,7 +16,3 @@ jobs:
       - run: |
           docker login -u $DOCKER_USER -p $DOCKER_PASS
           ./docker/build.sh
-          docker run -d --name private-dns -p 53:53/tcp -p 53:53/udp -p 9999:9999/tcp --cap-add=NET_ADMIN nokamotohub/private-dns
-      - run: |
-          set -x
-          docker exec -it private-dns /root/go/bin/dnscli get

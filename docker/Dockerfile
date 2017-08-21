@@ -6,6 +6,8 @@ ENV HOST_FILE /etc/hosts.private
 
 ENV GRPC_PORT 9999
 
+ENV API_KEY default
+
 RUN apk --no-cache add dnsmasq
 
 RUN touch $HOST_FILE
